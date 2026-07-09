@@ -223,6 +223,46 @@ img{max-width:100%}
 .interest-card input:checked + .ic-inner i{color:var(--primary)}
 
 /* RESULTS */
+
+/* AI Loading Overlay */
+.ai-loading-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255,255,255,0.95); z-index: 9999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.ai-loading-overlay.show { opacity: 1; pointer-events: all; }
+.ai-loader { text-align: center; max-width: 400px; }
+.ai-loader-icon {
+  width: 80px; height: 80px; margin: 0 auto 24px;
+  border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  animation: aiPulse 1.5s ease-in-out infinite;
+}
+.ai-loader-icon svg { width: 40px; height: 40px; fill: #fff; }
+@keyframes aiPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(79,70,229,0.4); }
+  50% { transform: scale(1.08); box-shadow: 0 0 0 20px rgba(79,70,229,0); }
+}
+.ai-loader h3 { font-size: 20px; color: var(--text); margin-bottom: 8px; }
+.ai-loader p { font-size: 14px; color: var(--text-light); margin-bottom: 20px; }
+.ai-progress-bar { width: 100%; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden; }
+.ai-progress-fill {
+  height: 100%; width: 0; background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 2px; animation: aiProgress 8s ease-out forwards;
+}
+@keyframes aiProgress {
+  0% { width: 0; } 30% { width: 40%; } 60% { width: 65%; } 80% { width: 80%; } 100% { width: 92%; }
+}
+.ai-loader .ai-steps { margin-top: 16px; text-align: left; }
+.ai-loader .ai-step {
+  font-size: 13px; color: var(--text-light); padding: 4px 0; display: flex; align-items: center; gap: 8px;
+  opacity: 0; animation: aiFadeIn 0.4s ease forwards;
+}
+.ai-loader .ai-step i { color: var(--primary); width: 16px; text-align: center; }
+.ai-loader .ai-step.done i { color: #10b981; }
+@keyframes aiFadeIn { to { opacity: 1; } }
+
 .results-page{padding:100px var(--cp) 60px}
 .results-top{display:flex;align-items:center;gap:16px;margin-bottom:4px}
 .results-top .back-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0}
@@ -338,7 +378,9 @@ img{max-width:100%}
 .btt:hover{background:var(--accent);transform:translateY(-3px)}
 
 /* RESPONSIVE */
+/* ===== RESPONSIVE: TABLET LANDSCAPE (1024px) ===== */
 @media(max-width:1024px){
+  :root{--cp:24px}
   .uni-content{grid-template-columns:1fr}
   .uni-sidebar{flex-direction:row;overflow-x:auto;gap:16px}
   .uni-sidebar .ad-box{min-width:250px}
@@ -346,35 +388,177 @@ img{max-width:100%}
   .steps-grid{grid-template-columns:1fr 1fr}
   .features-grid{grid-template-columns:1fr 1fr}
   .modal-stats{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:44px}
+  .hero p{font-size:16px}
+  .hero-stats{gap:32px}
+  .section-title{font-size:28px}
+  .cta-section h2{font-size:30px}
+  .featured-slide{padding:36px}
+  .featured-slide h3{font-size:24px}
+  .results-page{padding:90px 24px 40px}
+  .compare-bar{padding:12px 24px}
 }
+
+/* ===== RESPONSIVE: TABLET PORTRAIT (768px) ===== */
 @media(max-width:768px){
-  .nav{padding:0 20px}
-  .nav-center{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);padding:16px 24px;box-shadow:var(--shadow-lg);gap:4px}
+  :root{--cp:16px}
+  .nav{padding:0 16px;height:60px}
+  .nav .logo{font-size:20px}
+  .nav-right .btn{padding:8px 16px;font-size:13px}
+  .nav-center{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);padding:16px 20px;box-shadow:var(--shadow-lg);gap:4px;z-index:999}
   .nav-center.show{display:flex}
-  .nav-center a{padding:10px 16px;border-radius:8px}
+  .nav-center a{padding:12px 16px;border-radius:8px;font-size:15px}
   .mobile-menu{display:block}
-  .hero{padding:100px 20px 60px}
-  .hero h1{font-size:34px}
-  .hero-stats{gap:24px;flex-wrap:wrap}
-  .hero-btns{flex-direction:column;align-items:center}
-  .how-section,.why-section,.cta-section,.featured-section{padding:60px 20px}
+  .hero{padding:90px 20px 50px}
+  .hero h1{font-size:32px;max-width:100%}
+  .hero p{font-size:15px;margin-bottom:28px}
+  .hero-stats{gap:20px;flex-wrap:wrap;justify-content:center}
+  .hero-stat .num{font-size:28px}
+  .hero-stat .label{font-size:12px}
+  .hero-btns{flex-direction:column;align-items:center;gap:12px}
+  .hero-btns .btn{padding:12px 28px;font-size:15px;width:100%;max-width:300px;justify-content:center}
+  .ai-badge{font-size:13px;padding:6px 16px}
+  .ai-badge svg{width:16px;height:16px}
+  .trusted{padding:28px 16px}
+  .slider-card{padding:10px 16px;min-width:180px}
+  .slider-card img{width:32px;height:32px}
+  .slider-card .name{font-size:13px;max-width:120px}
+  .how-section,.why-section,.cta-section{padding:50px 20px}
+  .section-title{font-size:24px}
+  .section-sub{font-size:14px;margin-bottom:32px}
   .steps-grid,.features-grid{grid-template-columns:1fr}
-  .uni-content{padding:20px}
+  .step-card,.feature-card{padding:24px 20px}
+  .featured-section{padding:40px 16px}
+  .featured-slide{padding:28px 24px;flex-direction:column;text-align:center;gap:20px}
+  .featured-slide h3{font-size:22px}
+  .featured-slide p{font-size:13px}
+  .feat-nav{width:32px;height:32px;font-size:14px}
+  .feat-prev{left:8px}
+  .feat-next{right:8px}
+  .cta-section h2{font-size:26px}
+  .cta-section p{font-size:14px}
+  .uni-page-header{padding:80px 20px 30px}
+  .uni-page-header h1{font-size:26px}
+  .uni-content{padding:16px}
   .uni-list{grid-template-columns:1fr}
-  .uni-filters{padding:12px 20px;top:64px;overflow-x:auto}
-  .footer-grid{grid-template-columns:1fr 1fr}
-  .inline-ad{flex-direction:column;text-align:center}
-  .inline-ad .ad-action{margin-left:0}
-  .find-page{padding:80px 20px 40px}
-  .results-page{padding:80px 20px 40px}
+  .uni-filters{padding:12px 16px;top:60px;overflow-x:auto;gap:8px}
+  .filter-input{min-width:140px;padding:8px 12px;font-size:13px}
+  .filter-select{padding:8px 12px;font-size:13px}
+  .ucard{padding:20px}
+  .ucard h3{font-size:15px;max-width:70%}
+  .find-page{padding:80px 16px 40px}
+  .find-page h1{font-size:24px}
+  .wizard{padding:24px 20px}
+  .wizard-step h2{font-size:18px}
   .form-row{grid-template-columns:1fr}
+  .radio-group{gap:8px}
+  .radio-option{padding:10px 14px;font-size:13px}
+  .results-page{padding:80px 16px 40px}
+  .results-page h2{font-size:20px}
+  .results-filters{gap:8px}
+  .results-filters select{padding:6px 10px;font-size:12px}
+  .rcard-header{padding:16px 18px}
+  .rcard-header img{width:40px;height:40px}
+  .rcard-header h3{font-size:14px}
+  .rcard-body{padding:16px 18px}
+  .rcard-body .dept-name{font-size:14px}
+  .rcard-meta{grid-template-columns:1fr}
+  .rcard-footer{padding:12px 18px}
+  .compare-bar{padding:10px 16px;flex-wrap:wrap;gap:10px}
+  .toast{max-width:320px;right:16px;top:70px}
+  .modal{max-width:95vw;max-height:90vh}
+  .auth-modal{max-width:95vw;max-height:90vh}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .footer{padding:40px 20px 20px}
+  .inline-ad{flex-direction:column;text-align:center;padding:20px}
+  .inline-ad .ad-action{margin-left:0;margin-top:12px}
+  .ad-strip{font-size:12px;padding:8px 16px}
+  .btt{bottom:16px;right:16px;width:40px;height:40px;font-size:16px}
 }
+
+/* ===== RESPONSIVE: MOBILE (480px) ===== */
 @media(max-width:480px){
-  .hero h1{font-size:28px}
-  .footer-grid{grid-template-columns:1fr}
+  .nav{padding:0 12px}
+  .nav .logo{font-size:18px;gap:8px}
+  .nav .logo .logo-icon{width:28px;height:28px}
+  .nav-right{gap:8px}
+  .nav-right .btn{padding:6px 12px;font-size:12px}
+  .hero{padding:80px 16px 40px}
+  .hero h1{font-size:26px;line-height:1.2}
+  .hero p{font-size:14px;line-height:1.6;margin-bottom:24px}
+  .hero-stats{gap:16px}
+  .hero-stat .num{font-size:24px}
+  .hero-btns .btn{max-width:100%}
+  .ai-badge{font-size:12px;padding:6px 14px;gap:6px}
+  .trusted .label{font-size:11px}
+  .slider-card{padding:8px 12px;min-width:160px;gap:8px}
+  .slider-card img{width:28px;height:28px}
+  .slider-card .name{font-size:12px;max-width:100px}
+  .section-title{font-size:22px}
+  .section-sub{font-size:13px}
+  .find-page{padding:75px 12px 30px}
+  .find-page h1{font-size:22px}
+  .find-page .sub{font-size:13px}
+  .wizard{padding:20px 16px;border-radius:12px}
+  .wizard-step h2{font-size:16px;gap:8px}
+  .wizard-step .step-desc{font-size:13px}
+  .form-group label{font-size:13px}
+  .form-input{padding:10px 14px;font-size:13px}
+  .radio-option{padding:10px 12px;font-size:12px;gap:8px}
   .interest-grid{grid-template-columns:1fr}
+  .ic-inner{padding:14px}
+  .ic-inner strong{font-size:13px}
+  .wizard-nav .btn{padding:10px 18px;font-size:13px}
+  .results-page{padding:75px 12px 30px}
+  .results-page h2{font-size:18px}
+  .results-filters{flex-direction:column}
+  .results-filters select{width:100%}
+  .rcard-header{padding:14px 16px;gap:10px}
+  .rcard-header img{width:36px;height:36px;border-radius:8px}
+  .rcard-header h3{font-size:13px}
+  .match-badge{padding:3px 10px;font-size:11px}
+  .rcard-body{padding:14px 16px}
+  .rcard-body .dept-name{font-size:13px}
+  .rcard-meta span{font-size:12px}
+  .rcard-footer{padding:10px 16px;gap:8px;flex-wrap:wrap}
+  .compare-bar{flex-direction:column;gap:8px;text-align:center}
+  .compare-bar .cb-actions{display:flex;gap:8px;justify-content:center}
+  .toast{left:12px;right:12px;max-width:none;top:65px}
+  .modal{border-radius:12px}
+  .modal-bg{padding:10px}
+  .auth-modal{max-width:100%;border-radius:12px}
+  .auth-bg{padding:10px}
   .auth-row{grid-template-columns:1fr}
-  .auth-modal{max-width:95vw}
+  .auth-body label{font-size:13px}
+  .auth-body input,.auth-body select{font-size:13px;padding:10px 14px}
+  .footer-grid{grid-template-columns:1fr;gap:20px;text-align:center}
+  .footer .socials{justify-content:center}
+  .cta-section h2{font-size:22px}
+  .cta-section p{font-size:13px}
+  .featured-slide{padding:24px 20px}
+  .featured-slide h3{font-size:20px}
+  .uni-page-header{padding:75px 16px 24px}
+  .uni-page-header h1{font-size:22px}
+  .uni-filters{flex-direction:column;gap:8px}
+  .filter-input,.filter-select{width:100%;min-width:0}
+  .ucard{padding:16px}
+  .ucard h3{font-size:14px;max-width:65%}
+  .ucard .loc{font-size:12px}
+  .ucard .fee-range{font-size:13px}
+  .ucard-tags .utag{font-size:11px;padding:3px 10px}
+  .ad-strip .sep{display:none}
+  .ad-strip{flex-direction:column;gap:6px}
+}
+
+/* ===== RESPONSIVE: SMALL MOBILE (360px) ===== */
+@media(max-width:360px){
+  .hero h1{font-size:22px}
+  .hero p{font-size:13px}
+  .hero-stats{flex-direction:column;gap:12px;align-items:center}
+  .nav-right .btn-outline{display:none}
+  .wizard{padding:16px 14px}
+  .wizard-nav{flex-direction:column;gap:10px}
+  .wizard-nav .btn{width:100%;justify-content:center}
 }
 </style>
 </head>
@@ -899,6 +1083,24 @@ img{max-width:100%}
       </div>
     </div>
     <div class="step-indicator" id="stepIndicator">Step 1 of 4</div>
+  </div>
+</div>
+
+<!-- AI Loading Overlay -->
+<div class="ai-loading-overlay" id="aiLoadingOverlay">
+  <div class="ai-loader">
+    <div class="ai-loader-icon">
+      <svg viewBox="0 0 248.9 259" xmlns="http://www.w3.org/2000/svg">
+        <path d="M241,12.3c.2.1.2.5,0,.5-7.4.8-11.7,4.9-12.8,12.3,0,.2-.2.3-.4.3s-.4-.1-.4-.3c-1.1-7-5.2-11.2-12.3-12.4-.2,0-.2-.4,0-.4,7.1-1.3,11.3-5.3,12.5-12.1,0,0,.1-.2.2-.2s.2,0,.2.2c1,5.9,4.3,9.7,10.1,11.5,1.1.3,2.1.3,2.9.7h0Z"/>
+        <path d="M196.9,6.2c0-.2.4-.3.4,0,.9,4.8,1.8,8.6,3.4,11.8,4.6,9.4,12.2,15.2,22.7,17.6,1.6.3,4.1.3,5.6.9.3.1.2.7-.1.7-13.4.5-25.3,8.7-29.4,21.7-1,3.1-1.7,6-2.2,8.9,0,.3-.5.3-.6,0-.4-2-.9-5.8-1.7-8.2-4.7-13.4-14.3-20.9-28.9-22.5-.2,0-.4-.2-.4-.5h0c0-.3.2-.5.4-.5,5.2-.3,10.2-1.8,14.9-4.6,7.6-4.5,12.4-11.1,14.6-19.7.5-1.9.9-3.8,1.2-5.8h0Z"/>
+        <path d="M102.6,85.4c8,0,12.3,0,12.9,0,.1,0,.2,0,.3.2l37.2,109.1c0,.3-.1.5-.4.5h-18.2c-.2,0-.4-.1-.5-.3l-8.9-26.1c-.1-.5-.6-.8-1.1-.8-3.1,0-10.2,0-21.3,0s-18.2,0-21.3,0c-.5,0-.9.3-1.1.8l-8.9,26.1c0,.2-.3.3-.5.3h-18.2c-.3,0-.5-.3-.4-.5l37.3-109.1c0-.1.1-.2.3-.2.6,0,4.9,0,12.9,0M86.7,149.6c0,.2,0,.3.2.3h31.2c.2,0,.3-.2.2-.3l-15.6-46.4c0-.2-.4-.2-.5,0l-15.6,46.4h0Z"/>
+        <path d="M185.4,194.6c0,.4-.3.7-.7.7h-16.7c-.4,0-.7-.3-.7-.7v-107.6c0-.4.3-.7.7-.7h16.7c.4,0,.7.3.7.7v107.6h0Z"/>
+      </svg>
+    </div>
+    <h3>AI is analyzing your profile</h3>
+    <p>Our AI is evaluating universities based on your preferences</p>
+    <div class="ai-progress-bar"><div class="ai-progress-fill" id="aiProgressFill"></div></div>
+    <div class="ai-steps" id="aiSteps"></div>
   </div>
 </div>
 
@@ -1441,67 +1643,271 @@ const INTEREST_KEYWORDS = {
   'Social Sciences': ['economics','sociology','psychology','political science','international relations','anthropology','social science','development studies']
 };
 
-function runMatch() {
-  const ssc = parseFloat(document.getElementById('w-ssc').value) || 0;
-  const hsc = parseFloat(document.getElementById('w-hsc').value) || 0;
-  const budget = parseFloat(document.getElementById('w-budget').value) || Infinity;
-  const location = document.getElementById('w-location').value;
+function showAiLoading(show) {
+  var overlay = document.getElementById('aiLoadingOverlay');
+  var stepsEl = document.getElementById('aiSteps');
+  var progressFill = document.getElementById('aiProgressFill');
+  if (show) {
+    stepsEl.innerHTML = '';
+    progressFill.style.animation = 'none';
+    void progressFill.offsetHeight;
+    progressFill.style.animation = 'aiProgress 8s ease-out forwards';
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  } else {
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+}
 
-  // Collect selected interests
-  const selectedInterests = [];
-  document.querySelectorAll('#interestGrid input[name="interest"]:checked').forEach(cb => {
+function addAiStep(text, done) {
+  var stepsEl = document.getElementById('aiSteps');
+  var step = document.createElement('div');
+  step.className = 'ai-step' + (done ? ' done' : '');
+  step.style.animationDelay = (stepsEl.children.length * 0.3) + 's';
+  step.innerHTML = '<i class="fas ' + (done ? 'fa-check-circle' : 'fa-spinner fa-spin') + '"></i> ' + text;
+  stepsEl.appendChild(step);
+}
+
+function preFilterCandidates() {
+  var ssc = parseFloat(document.getElementById('w-ssc').value) || 0;
+  var hsc = parseFloat(document.getElementById('w-hsc').value) || 0;
+  var budget = parseFloat(document.getElementById('w-budget').value) || Infinity;
+  var location = document.getElementById('w-location').value;
+  var selectedInterests = [];
+  document.querySelectorAll('#interestGrid input[name="interest"]:checked').forEach(function(cb) {
     selectedInterests.push(cb.value);
   });
-
-  // Build keyword list from selected interests
-  const keywords = [];
-  selectedInterests.forEach(interest => {
-    if (INTEREST_KEYWORDS[interest]) keywords.push(...INTEREST_KEYWORDS[interest]);
+  var keywords = [];
+  selectedInterests.forEach(function(interest) {
+    if (INTEREST_KEYWORDS[interest]) keywords.push.apply(keywords, INTEREST_KEYWORDS[interest]);
   });
-
-  let results = [];
-
-  UNIS.forEach(u => {
+  var results = [];
+  UNIS.forEach(function(u) {
     if (u.departments.length === 0) return;
     if (location && u.location !== location) return;
-
-    u.departments.forEach(d => {
-      let score = 50;
-      let match = true;
-
-      if (ssc > 0 && d.minSSC > 0) {
-        if (ssc < d.minSSC) match = false;
-        else score += Math.min(15, (ssc - d.minSSC) * 10);
-      }
-      if (hsc > 0 && d.minHSC > 0) {
-        if (hsc < d.minHSC) match = false;
-        else score += Math.min(15, (hsc - d.minHSC) * 10);
-      }
-      if (budget < Infinity && d.tuitionFee > 0) {
-        if (d.tuitionFee > budget) match = false;
-        else score += Math.min(10, ((budget - d.tuitionFee) / budget) * 20);
-      }
-
-      // Interest matching
+    u.departments.forEach(function(d) {
+      var match = true;
+      if (ssc > 0 && d.minSSC > 0 && ssc < d.minSSC) match = false;
+      if (hsc > 0 && d.minHSC > 0 && hsc < d.minHSC) match = false;
+      if (budget < Infinity && d.tuitionFee > 0 && d.tuitionFee > budget) match = false;
       if (keywords.length > 0) {
-        const dName = d.name.toLowerCase();
-        const dFaculty = d.faculty.toLowerCase();
-        const matched = keywords.some(kw => dName.includes(kw) || dFaculty.includes(kw));
+        var dName = d.name.toLowerCase();
+        var dFaculty = d.faculty.toLowerCase();
+        var matched = keywords.some(function(kw) { return dName.includes(kw) || dFaculty.includes(kw); });
         if (!matched) match = false;
-        else score += 10;
       }
-
       if (match) {
-        results.push({ uni: u, dept: d, score: Math.min(99, Math.round(score)) });
+        results.push({ uni: u, dept: d, score: 50 });
       }
     });
   });
+  return {
+    results: results,
+    profile: { ssc: ssc, hsc: hsc, budget: budget, location: location, interests: selectedInterests }
+  };
+}
 
-  results.sort((a, b) => b.score - a.score);
-  results = results.slice(0, 30);
+var UNI_REPUTATION = {
+  'North South University': 1, 'BRAC University': 1, 'Independent University, Bangladesh': 1,
+  'American International University-Bangladesh': 1, 'East West University': 1,
+  'United International University': 1, 'Ahsanullah University of Science and Technology': 1,
+  'University of Liberal Arts Bangladesh': 1,
+  'Daffodil International University': 2, 'University of Asia Pacific': 2,
+  'Stamford University Bangladesh': 2, 'Green University of Bangladesh': 2,
+  'Southeast University': 2, 'BGMEA University of Fashion & Technology': 2,
+  'City University': 2, 'Northern University Bangladesh': 2,
+  'Bangladesh University of Business and Technology': 2, 'Presidency University': 2,
+  'Bangladesh University': 2, 'State University of Bangladesh': 2
+};
 
-  renderResults(results);
-  showPage('results');
+function getReputationScore(uniName) {
+  var tier = UNI_REPUTATION[uniName] || 3;
+  if (tier === 1) return 95;
+  if (tier === 2) return 75;
+  return 55;
+}
+
+function basicScoreFallback(candidates, profile) {
+  candidates.forEach(function(r) {
+    var matchScore = 50;
+    if (profile.ssc > 0 && r.dept.minSSC > 0) matchScore += Math.min(15, (profile.ssc - r.dept.minSSC) * 10);
+    if (profile.hsc > 0 && r.dept.minHSC > 0) matchScore += Math.min(15, (profile.hsc - r.dept.minHSC) * 10);
+    if (profile.budget < Infinity && r.dept.tuitionFee > 0) matchScore += Math.min(10, ((profile.budget - r.dept.tuitionFee) / profile.budget) * 20);
+    var repScore = getReputationScore(r.uni.name);
+    r.score = Math.min(99, Math.round(matchScore * 0.5 + repScore * 0.5));
+  });
+  candidates.sort(function(a, b) { return b.score - a.score; });
+  return candidates.slice(0, 30);
+}
+
+function buildGeminiPrompt(candidates, profile) {
+  var programList = candidates.slice(0, 50).map(function(r, i) {
+    return (i + 1) + '. "' + r.dept.name + '" at ' + r.uni.name +
+      ' | Faculty: ' + r.dept.faculty +
+      ' | Tuition: ' + (r.dept.tuitionFee > 0 ? r.dept.tuitionFee + ' BDT' : 'N/A') +
+      ' | Duration: ' + (r.dept.duration || 'N/A') +
+      ' | Min SSC: ' + (r.dept.minSSC || 'N/A') + ', Min HSC: ' + (r.dept.minHSC || 'N/A') +
+      ' | Location: ' + r.uni.location;
+  }).join('\n');
+
+  var prompt = 'You are an expert education counselor for Bangladeshi private universities in Dhaka.\n\n' +
+    'STUDENT PROFILE:\n' +
+    '- SSC GPA: ' + (profile.ssc || 'Not provided') + '\n' +
+    '- HSC GPA: ' + (profile.hsc || 'Not provided') + '\n' +
+    '- Maximum Budget: ' + (profile.budget < Infinity ? profile.budget + ' BDT' : 'No limit') + '\n' +
+    '- Preferred Location: ' + (profile.location || 'Any area in Dhaka') + '\n' +
+    '- Academic Interests: ' + (profile.interests.length > 0 ? profile.interests.join(', ') : 'Not specified') + '\n\n' +
+    'ELIGIBLE PROGRAMS (already filtered by GPA eligibility and budget):\n' + programList + '\n\n' +
+    'TASK: You must follow a strict TWO-STEP process.\n\n' +
+    'STEP 1 - MATCH (equal weight filtering):\n' +
+    'Evaluate how well each program matches the student\'s inputs. All four criteria carry EQUAL weight (25% each):\n' +
+    '- Academic Results: Does the student\'s GPA comfortably meet or exceed the program\'s minimum requirements?\n' +
+    '- Tuition Fee: Is the program within or well within the student\'s budget?\n' +
+    '- Location: Does the program\'s location match the student\'s preference?\n' +
+    '- Area of Interest: Does the program align with the student\'s selected fields of study?\n' +
+    'Give each program a match_score from 0-100 based on these four criteria equally. ' +
+    'Programs that satisfy all four criteria well should score 80+. ' +
+    'Drop any program with a match_score below 30.\n\n' +
+    'STEP 2 - SORT BY REPUTATION (display ordering):\n' +
+    'Among the matched programs from Step 1, sort them by university reputation, education quality, and popularity. ' +
+    'Use your knowledge of Bangladeshi private universities:\n' +
+    '- Tier 1 (top reputation): North South University (NSU), BRAC University, ' +
+    'Independent University Bangladesh (IUB), American International University-Bangladesh (AIUB), ' +
+    'East West University (EWU), United International University (UIU), ' +
+    'Ahsanullah University of Science and Technology (AUST), University of Liberal Arts Bangladesh (ULAB)\n' +
+    '- Tier 2 (good reputation): Daffodil International University, University of Asia Pacific, ' +
+    'Stamford University, Green University, Southeast University, BGMEA University of Fashion and Technology, ' +
+    'City University, Northern University\n' +
+    '- Tier 3: All other private universities\n\n' +
+    'The final score combines both steps: final_score = (match_score * 0.5) + (reputation_score * 0.5)\n' +
+    'Where reputation_score is: Tier 1 = 90-99, Tier 2 = 70-89, Tier 3 = 45-69\n' +
+    'This means if two programs have identical match scores, the one from the better university ranks higher.\n\n' +
+    'RESPOND IN EXACTLY THIS JSON FORMAT (no markdown, no extra text):\n' +
+    '{"rankings":[{"index":1,"score":95,"reason":"Brief 10-15 word reason"},{"index":2,"score":88,"reason":"..."}]}\n\n' +
+    'Rules:\n' +
+    '- "index" is the program number from the list above (1-based)\n' +
+    '- "score" is the final_score (1-99), combining match quality and reputation\n' +
+    '- Return at most 30 programs\n' +
+    '- "reason" should mention both the match quality AND the university\'s standing\n' +
+    '- Order strictly from highest final_score to lowest';
+
+  return prompt;
+}
+
+var GEMINI_API_KEY = atob('QVEuQWI4Uk42S0ZrOWZyUmtyUTJOajl3WG5XaWcybWFfLXN1UTVwdkpxcl9RZWlKYlRXOWc=');
+
+function runMatch() {
+  var filtered = preFilterCandidates();
+  var candidates = filtered.results;
+  var profile = filtered.profile;
+
+  if (candidates.length === 0) {
+    renderResults([]);
+    showPage('results');
+    return;
+  }
+
+  showAiLoading(true);
+  addAiStep('Filtering eligible programs...', true);
+
+  setTimeout(function() {
+    addAiStep('Found ' + candidates.length + ' eligible programs', true);
+  }, 400);
+
+  setTimeout(function() {
+    addAiStep('Sending to Gemini AI for analysis...', false);
+  }, 800);
+
+  var prompt = buildGeminiPrompt(candidates, profile);
+  var apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_API_KEY;
+
+  var requestBody = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.3,
+      maxOutputTokens: 2048
+    }
+  };
+
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestBody)
+  })
+  .then(function(response) {
+    if (!response.ok) throw new Error('API returned ' + response.status);
+    return response.json();
+  })
+  .then(function(data) {
+    addAiStep('AI analysis complete!', true);
+
+    var text = '';
+    try {
+      text = data.candidates[0].content.parts[0].text;
+    } catch(e) {
+      throw new Error('Unexpected API response format');
+    }
+
+    // Clean markdown code blocks if present
+    text = text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+
+    var parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch(e) {
+      // Try to extract JSON from the response
+      var jsonMatch = text.match(/\{[\s\S]*"rankings"[\s\S]*\}/);
+      if (jsonMatch) {
+        parsed = JSON.parse(jsonMatch[0]);
+      } else {
+        throw new Error('Could not parse AI response');
+      }
+    }
+
+    if (!parsed.rankings || !Array.isArray(parsed.rankings)) {
+      throw new Error('Invalid rankings format');
+    }
+
+    var candidateSlice = candidates.slice(0, 50);
+    var aiResults = [];
+    parsed.rankings.forEach(function(r) {
+      var idx = r.index - 1;
+      if (idx >= 0 && idx < candidateSlice.length) {
+        var c = candidateSlice[idx];
+        aiResults.push({
+          uni: c.uni,
+          dept: c.dept,
+          score: Math.max(1, Math.min(99, r.score)),
+          aiReason: r.reason || ''
+        });
+      }
+    });
+
+    if (aiResults.length === 0) throw new Error('No valid rankings returned');
+
+    aiResults.sort(function(a, b) { return b.score - a.score; });
+    aiResults = aiResults.slice(0, 30);
+
+    setTimeout(function() {
+      addAiStep('Ranked ' + aiResults.length + ' programs by best fit', true);
+      setTimeout(function() {
+        showAiLoading(false);
+        renderResults(aiResults);
+        showPage('results');
+      }, 600);
+    }, 400);
+  })
+  .catch(function(err) {
+    console.error('Gemini API error:', err);
+    addAiStep('AI unavailable, using smart scoring...', true);
+    setTimeout(function() {
+      showAiLoading(false);
+      var fallbackResults = basicScoreFallback(candidates, profile);
+      renderResults(fallbackResults);
+      showPage('results');
+    }, 800);
+  });
 }
 
 let allResults = [];
@@ -1595,6 +2001,7 @@ function renderResultCards(results) {
       + '<div class="loc"><i class="fas fa-map-marker-alt"></i> ' + (r.uni.location || 'Dhaka') + '</div></div>'
       + '<div class="match-badge">' + r.score + '% Match</div>'
       + '</div>'
+      + (r.aiReason ? '<div style="font-size:11px;color:var(--primary);padding:6px 16px 0;font-style:italic;background:rgba(79,70,229,0.04)"><i class="fas fa-robot" style="margin-right:4px"></i>' + r.aiReason + '</div>' : '')
       + '<div class="rcard-body">'
       + '<div class="dept-name"><i class="fas fa-graduation-cap"></i> ' + r.dept.name + '</div>'
       + '<div class="rcard-meta">'
